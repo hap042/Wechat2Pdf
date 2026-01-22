@@ -44,7 +44,18 @@ chmod +x start_dev.sh
 前端构建产物 (`frontend/dist`) 已经包含在代码仓库中，服务器**无需安装 Node.js，也无需进行构建**。
 
 ### 1. 准备工作
-确保服务器已安装 Docker 和 Docker Compose。
+确保服务器已安装 Docker。如果没有安装，请执行以下命令 (Ubuntu/Debian 示例)：
+
+```bash
+# 1. 安装 Docker
+curl -fsSL https://get.docker.com | bash
+
+# 2. 验证安装 (如果看到 Client 和 Server 版本信息则说明成功)
+docker --version
+
+# 注意：新版 Docker 自带 'docker compose' 命令 (中间有空格)
+# 如果你习惯用 'docker-compose' (中间有横杠)，可以忽略，直接用 'docker compose' 即可
+```
 
 ### 2. 获取代码并启动
 登录服务器，执行以下命令：
@@ -107,9 +118,9 @@ docker compose up -d --build
 
 ---
 
-## ☁️ 云服务器部署指南 (Docker 手动构建前端)
+## ☁️ 其他部署方式 (PM2 + Nginx)
 
-如果你不想使用 Docker，可以参考以下步骤。
+如果你不想使用 Docker，可以参考以下步骤直接在物理机/虚拟机上运行。
 
 ### 1. ⚠️ 低内存服务器特别说明 (2GB RAM)
 对于 2GB 内存的服务器，请务必注意以下两点：
