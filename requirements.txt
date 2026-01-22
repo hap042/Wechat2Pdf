@@ -1,0 +1,9 @@
+httpx[http2]
+beautifulsoup4
+Pillow
+numpy
+opencv-python-headless
+fastapi
+uvicorn
+python-multipart
+pypdf
