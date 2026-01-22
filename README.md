@@ -256,3 +256,10 @@ sudo systemctl reload nginx
 - **PM2 方式**:
   - 查看日志: `pm2 logs wechat2pdf-api`
   - 重启: `pm2 restart wechat2pdf-api`
+  
+- **更新代码**:
+  - `cd ~/Wechat2Pdf`
+  - `git pull`
+  - `docker compose up -d --build`
+  - 更改页面，拉取即可。更改后台代码后，需要重启 docker 服务。
+

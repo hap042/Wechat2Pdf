@@ -126,7 +126,9 @@ function App() {
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900">智能过滤</h3>
-                    <p className="text-xs text-gray-500">自动识别并移除二维码、卡片等非正文内容</p>
+                    <p className="text-xs text-gray-500">
+                      自动识别并移除二维码、卡片等非正文内容 <span className="text-red-500 font-bold">可能导致缺页</span>
+                    </p>
                   </div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
