@@ -88,12 +88,12 @@ function App() {
       <main className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
-            微信文章转 PDF
+            微信公众号试卷转 PDF
           </h1>
           <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            一键将微信公众号文章转换为纯净的 A4 PDF 文档。
+            专注于将微信公众号文章中的试卷图片智能提取并转换为干净、可打印的 PDF 文档。
             <br />
-            内置智能算法，自动移除广告、二维码和无关元素。
+            智能去噪，自动识别并移除文末广告、二维码和无关图片。
           </p>
         </div>
 
