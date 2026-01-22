@@ -88,17 +88,17 @@ Docker 容器是独立运行的守护进程。当你断开 SSH 连接（退出�
 cd Wechat2Pdf
 
 # 重启服务 (会重新加载配置)
-docker-compose restart
+docker compose restart
 
 # 停止服务
-docker-compose stop
+docker compose stop
 
 # 停止并删除容器 (不会删除数据)
-docker-compose down
+docker compose down
 
 # 更新代码并重新构建启动
 git pull
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 ### 3. 服务器重启了怎么办？
