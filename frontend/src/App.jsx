@@ -42,7 +42,17 @@ function App() {
       const downloadUrl = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = downloadUrl
-      a.download = 'article.pdf'
+      
+      // Generate filename with timestamp
+      const now = new Date()
+      const timestamp = now.getFullYear().toString() +
+        (now.getMonth() + 1).toString().padStart(2, '0') +
+        now.getDate().toString().padStart(2, '0') + '_' +
+        now.getHours().toString().padStart(2, '0') +
+        now.getMinutes().toString().padStart(2, '0') +
+        now.getSeconds().toString().padStart(2, '0')
+      a.download = `article_${timestamp}.pdf`
+      
       document.body.appendChild(a)
       a.click()
       a.remove()
