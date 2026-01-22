@@ -102,8 +102,6 @@ function App() {
           </h1>
           <p className="text-lg text-gray-500 max-w-2xl mx-auto">
             专注于将微信公众号文章中的试卷图片智能提取并转换为干净、可打印的 PDF 文档。
-            <br />
-            智能去噪，自动识别并移除文末广告、二维码和无关图片。
           </p>
         </div>
 
