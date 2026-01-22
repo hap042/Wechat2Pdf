@@ -45,8 +45,8 @@ REQUEST_TIMEOUT = 20.0     # Seconds (请求超时)
 MAX_CONCURRENT_DOWNLOADS = 10  # Max concurrent downloads (最大并发数)
 MAX_IMAGE_SIZE_BYTES = 10 * 1024 * 1024  # 10MB limit per image (单张图片最大限制)
 USER_AGENT = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 )
 
 # 防止 PIL Decompression Bomb 攻击
@@ -329,6 +329,7 @@ class ArticleProcessor:
 
         Raises:
             httpx.HTTPStatusError: 如果请求返回非 200 状态码。
+            ValueError: 如果内容被微信反爬虫拦截。
         """
         async with httpx.AsyncClient(timeout=REQUEST_TIMEOUT, follow_redirects=True) as client:
             headers = {
@@ -337,7 +338,12 @@ class ArticleProcessor:
             }
             resp = await client.get(url, headers=headers)
             resp.raise_for_status()
-            return resp.text
+            
+            html = resp.text
+            if "verify.html" in html or "访问过于频繁" in html:
+                 raise ValueError("微信反爬虫拦截：访问过于频繁，请稍后再试或在浏览器中打开链接。")
+                 
+            return html
 
     @staticmethod
     def extract_image_urls(html: str) -> List[str]:
