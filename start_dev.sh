@@ -2,9 +2,22 @@
 
 # Function to kill background processes on exit
 cleanup() {
+    echo ""
     echo "Stopping services..."
-    # Kill all child processes of this script
-    pkill -P $$
+    
+    # Kill specific processes if they are running
+    if [ -n "$BACKEND_PID" ]; then
+        kill $BACKEND_PID 2>/dev/null
+    fi
+    
+    if [ -n "$FRONTEND_PID" ]; then
+        kill $FRONTEND_PID 2>/dev/null
+    fi
+    
+    # Wait for them to finish shutting down (prevents logs appearing after prompt)
+    wait $BACKEND_PID $FRONTEND_PID 2>/dev/null
+    
+    echo "All services stopped."
     exit 0
 }
 
