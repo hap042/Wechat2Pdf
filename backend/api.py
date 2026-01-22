@@ -94,13 +94,10 @@ async def convert_to_pdf(req: ConvertRequest):
             raise HTTPException(status_code=400, detail="没有有效的图片可生成 PDF (可能全被过滤了)")
         
         # 3. 生成 PDF 到内存 (Generate PDF to memory)
-        # 这部分是 CPU 密集型操作，但 PIL 操作通常足够快。
-        # 如果阻塞事件循环过久，可以考虑卸载到线程池。
-        # (This part is CPU bound, but PIL operations are fast enough for now.)
-        pdf_buffer = BytesIO()
-        first, *rest = images
-        first.save(pdf_buffer, format="PDF", save_all=True, append_images=rest, resolution=100.0)
-        pdf_buffer.seek(0)
+        # 这部分是 CPU 密集型操作，使用 run_in_executor 避免阻塞事件循环
+        # (This part is CPU bound, run in thread pool to avoid blocking event loop)
+        loop = asyncio.get_running_loop()
+        pdf_buffer = await loop.run_in_executor(None, ArticleProcessor.generate_pdf_bytes, images)
         
         # 4. 以流的形式返回 (Return as stream)
         filename = "article.pdf"

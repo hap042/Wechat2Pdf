@@ -13,7 +13,7 @@ def run_tests():
     os.makedirs(output_dir, exist_ok=True)
     
     # Expected page counts for the test cases
-    EXPECTED_PAGES = [11, 14, 8]
+    EXPECTED_PAGES = [11, 14, 8, 9]
     
     # Read URLs
     if not os.path.exists(test_urls_path):

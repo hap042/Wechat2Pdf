@@ -168,7 +168,10 @@ class SmartFilter:
                       ratio = area / (w * h)
                       
                       if ratio > 0.20:
-                           return False, f"检测到疑似二维码 (未解码, 占比 {ratio:.1%})"
+                           # 即使检测到疑似二维码，也不直接丢弃，而是标记为"显著二维码"
+                           # 交给后续的文本检测逻辑来综合判断。如果文本足够多，仍然认为是有效试卷。
+                           has_prominent_qr = True
+                           qr_reason = f"检测到疑似二维码 (未解码, 占比 {ratio:.1%})"
 
         except Exception as e:
             logger.warning(f"QR detection error: {e}")
@@ -520,6 +523,28 @@ class ArticleProcessor:
         first, *rest = images
         os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
         first.save(output_path, format="PDF", save_all=True, append_images=rest, resolution=100.0)
+
+    @staticmethod
+    def generate_pdf_bytes(images: List[Image.Image]) -> BytesIO:
+        """将图片列表转换为 PDF 字节流 (在内存中)。
+
+        Args:
+            images (List[Image.Image]): 图片列表。
+
+        Returns:
+            BytesIO: 包含 PDF 数据的内存缓冲区。
+
+        Raises:
+            ValueError: 如果图片列表为空。
+        """
+        if not images:
+            raise ValueError("No images to convert")
+
+        pdf_buffer = BytesIO()
+        first, *rest = images
+        first.save(pdf_buffer, format="PDF", save_all=True, append_images=rest, resolution=100.0)
+        pdf_buffer.seek(0)
+        return pdf_buffer
 
 
 # -----------------------------------------------------------------------------
