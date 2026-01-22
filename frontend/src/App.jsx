@@ -68,18 +68,18 @@ function App() {
             </span>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-            <a href="#" className="hover:text-blue-600 transition-colors">首页</a>
-            <a href="#" className="text-blue-600">工具</a>
-            <a href="#" className="hover:text-blue-600 transition-colors">工作流</a>
-            <a href="#" className="hover:text-blue-600 transition-colors">关于</a>
+            <a href="/" className="hover:text-blue-600 transition-colors">首页</a>
+            <a href="/" className="text-blue-600">工具</a>
+            <a href="/" className="hover:text-blue-600 transition-colors">工作流</a>
+            <a href="/" className="hover:text-blue-600 transition-colors">关于</a>
           </nav>
           <div className="flex items-center gap-3">
-            <button className="p-2 hover:bg-gray-100 rounded-full text-gray-500">
+            <a href="/" className="p-2 hover:bg-gray-100 rounded-full text-gray-500">
               <Settings className="w-5 h-5" />
-            </button>
-            <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-medium text-sm">
+            </a>
+            <a href="/" className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-medium text-sm hover:ring-2 hover:ring-blue-200 transition-all">
               H
-            </div>
+            </a>
           </div>
         </div>
       </header>
