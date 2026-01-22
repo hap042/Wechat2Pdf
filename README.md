@@ -44,17 +44,54 @@ chmod +x start_dev.sh
 前端构建产物 (`frontend/dist`) 已经包含在代码仓库中，服务器**无需安装 Node.js，也无需进行构建**。
 
 ### 1. 准备工作
-确保服务器已安装 Docker。如果没有安装，请执行以下命令 (Ubuntu/Debian 示例)：
+确保服务器已安装 Docker。
+
+> **⚠️ 国内服务器特别提示**：
+> 由于网络原因，直接使用官方脚本 (`get.docker.com`) 通常会超时失败。请根据你的系统选择以下国内镜像源安装方式：
+
+#### 方案 A：Ubuntu / Debian 系统 (使用阿里云源)
+复制并执行以下所有命令：
 
 ```bash
-# 1. 安装 Docker
-curl -fsSL https://get.docker.com | bash
+# 1. 更新系统并安装必要工具
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
 
-# 2. 验证安装 (如果看到 Client 和 Server 版本信息则说明成功)
-docker --version
+# 2. 添加阿里云 GPG 密钥
+curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-# 注意：新版 Docker 自带 'docker compose' 命令 (中间有空格)
-# 如果你习惯用 'docker-compose' (中间有横杠)，可以忽略，直接用 'docker compose' 即可
+# 3. 添加阿里云软件源
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# 4. 安装 Docker
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# 5. 启动 Docker 并设置开机自启
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# 6. 验证安装
+docker compose version
+```
+
+#### 方案 B：CentOS / EulerOS 系统 (华为云/阿里云常用)
+```bash
+# 1. 安装工具
+sudo yum install -y yum-utils
+
+# 2. 添加阿里云源
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+# 3. 安装 Docker
+sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# 4. 启动并设置开机自启
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# 5. 验证
+docker compose version
 ```
 
 ### 2. 获取代码并启动
