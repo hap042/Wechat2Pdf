@@ -108,11 +108,23 @@ sudo systemctl start docker && sudo systemctl enable docker
 docker compose up -d --build
 ```
 
-### 3. 访问
+### 3. (可选) 解决 Docker 镜像拉取失败
+如果启动时报错 `connection refused` 或拉取镜像超时，这是因为国内访问 Docker Hub 受限。
+
+我们提供了一键修复脚本：
+```bash
+# 运行镜像加速配置脚本
+sudo bash fix_network.sh
+
+# 然后再次尝试启动
+docker compose up -d --build
+```
+
+### 4. 访问服务
 服务启动后，Docker 会映射到宿主机的 **8080** 端口。
 你可以通过 `http://服务器IP:8080/wechat2pdf` 访问。
 
-### 4. (可选) 集成到现有 Nginx
+### 5. (可选) 集成到现有 Nginx
 如果你服务器上已经跑了 Nginx（占用了 80 端口），请在你的**宿主机 Nginx 配置**中添加：
 
 ```nginx
