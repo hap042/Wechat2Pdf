@@ -104,7 +104,8 @@ sudo systemctl start docker && sudo systemctl enable docker
 
 ```bash
 # 1. 一键启动 (Docker 会自动拉取 Python 环境并挂载内置的前端文件)
-docker-compose up -d --build
+# 注意：新版 Docker 命令是 'docker compose' (中间有空格)，不是 'docker-compose'
+docker compose up -d --build
 ```
 
 ### 3. 访问
@@ -135,6 +136,9 @@ Docker 容器是独立运行的守护进程。当你断开 SSH 连接（退出�
 ```bash
 # 进入项目目录
 cd Wechat2Pdf
+
+# 查看实时日志
+docker compose logs -f
 
 # 重启服务 (会重新加载配置)
 docker compose restart
@@ -233,9 +237,9 @@ sudo systemctl reload nginx
 ## 🛠 常用维护命令
 
 - **Docker 方式**:
-  - 查看日志: `docker-compose logs -f`
-  - 重启: `docker-compose restart`
-  - 停止: `docker-compose down`
+  - 查看日志: `docker compose logs -f`
+  - 重启: `docker compose restart`
+  - 停止: `docker compose down`
 
 - **PM2 方式**:
   - 查看日志: `pm2 logs wechat2pdf-api`
