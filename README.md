@@ -43,19 +43,32 @@ chmod +x start_dev.sh
 **这是最简单、最省心的部署方式 (特别是针对 2GB 内存服务器)。**
 前端构建产物 (`frontend/dist`) 已经包含在代码仓库中，服务器**无需安装 Node.js，也无需进行构建**。
 
-### 1. 准备工作
-确保服务器已安装 Docker。
+### 1. 准备工作 & 快速安装
+为了解决国内服务器安装 Docker 困难的问题，我们在项目中内置了一个自动安装脚本。
 
-> **⚠️ 国内服务器特别提示**：
-> 由于网络原因，直接使用官方脚本 (`get.docker.com`) 通常会超时失败。请根据你的系统选择以下国内镜像源安装方式：
+请按顺序执行：
 
-#### 方案 A：Ubuntu / Debian 系统 (使用阿里云源)
+```bash
+# 1. 克隆代码 (如果服务器没有 git，请先执行: sudo apt install git -y 或 sudo yum install git -y)
+git clone https://github.com/hap042/Wechat2Pdf.git
+cd Wechat2Pdf
+
+# 2. 一键安装 Docker (自动配置阿里云源)
+sudo bash install_docker.sh
+
+# 3. 验证安装 (看到版本号即成功)
+docker compose version
+```
+
+<details>
+<summary>点击展开：Docker 手动安装步骤 (备选方案)</summary>
+
+#### 方案 A：Ubuntu / Debian 系统 (阿里云源)
 复制并执行以下所有命令：
 
 ```bash
 # 1. 更新系统并安装必要工具
-sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
 
 # 2. 添加阿里云 GPG 密钥
 curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -64,15 +77,10 @@ curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --de
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # 4. 安装 Docker
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 # 5. 启动 Docker 并设置开机自启
-sudo systemctl start docker
-sudo systemctl enable docker
-
-# 6. 验证安装
-docker compose version
+sudo systemctl start docker && sudo systemctl enable docker
 ```
 
 #### 方案 B：CentOS / EulerOS 系统 (华为云/阿里云常用)
@@ -87,22 +95,15 @@ sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/cen
 sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 # 4. 启动并设置开机自启
-sudo systemctl start docker
-sudo systemctl enable docker
-
-# 5. 验证
-docker compose version
+sudo systemctl start docker && sudo systemctl enable docker
 ```
+</details>
 
-### 2. 获取代码并启动
-登录服务器，执行以下命令：
+### 2. 启动服务
+在 `Wechat2Pdf` 目录下，执行以下命令：
 
 ```bash
-# 1. 克隆代码
-git clone https://github.com/hap042/Wechat2Pdf.git
-cd Wechat2Pdf
-
-# 2. 一键启动 (Docker 会自动拉取 Python 环境并挂载内置的前端文件)
+# 1. 一键启动 (Docker 会自动拉取 Python 环境并挂载内置的前端文件)
 docker-compose up -d --build
 ```
 
