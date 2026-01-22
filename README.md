@@ -38,28 +38,23 @@ chmod +x start_dev.sh
 
 ---
 
-## ☁️ 云服务器部署指南 (Docker 推荐)
+## ☁️ 云服务器部署指南 (推荐: Git 直连)
 
-**这是最推荐的部署方式，特别是对于 2GB 内存的服务器。**
-我们使用 Docker 容器化部署，不仅环境隔离，而且可以避免在服务器上进行高内存消耗的构建操作。
+**这是最简单、最省心的部署方式 (特别是针对 2GB 内存服务器)。**
+前端构建产物 (`frontend/dist`) 已经包含在代码仓库中，服务器**无需安装 Node.js，也无需进行构建**。
 
 ### 1. 准备工作
-在**本地机器**上构建前端（避免在服务器上运行 npm install/build 消耗内存）：
-```bash
-cd frontend
-npm install
-npm run build
-# 此时会生成 dist 目录
-```
+确保服务器已安装 Docker 和 Docker Compose。
 
-### 2. 上传文件到服务器
-将整个项目（包含本地生成的 `frontend/dist`）上传到服务器。
-
-### 3. 服务器端启动
-确保服务器已安装 `docker` 和 `docker-compose`。
+### 2. 获取代码并启动
+登录服务器，执行以下命令：
 
 ```bash
-# 在服务器项目根目录下运行
+# 1. 克隆代码
+git clone https://github.com/hap042/Wechat2Pdf.git
+cd Wechat2Pdf
+
+# 2. 一键启动 (Docker 会自动拉取 Python 环境并挂载内置的前端文件)
 docker-compose up -d --build
 ```
 
